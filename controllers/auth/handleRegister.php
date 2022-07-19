@@ -1,25 +1,10 @@
-<?php
-    session_start();
-
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\SMTP;
-    use PHPMailer\PHPMailer\Exception;
-
-    require '../../vendor/autoload.php';
+<?php session_start();
     include_once '../../connect.php';   
     include_once '../../models/auth/function.php';
-
+    include_once 'sendmail.php';
     
     $verification_code = 'user';
     if(isset($_POST['register'])) {
-        // date_default_timezone_set('Asia/Ho_Chi_Minh');
-        // $now = date("Y-m-d H:i:s");
-        // $number_time_now = strtotime($now);
-        // $last_id = $conn->lastInsertId();
-        // $code = bin2hex(2 . '_' . $number_time_now);
-        // $token = pack("H*",($code));
-        // $data = explode('_', $token);
-        // var_dump($last_id);exit;
 
             $data['username'] =  check_data($_POST['username']);
             $data['email'] = isset($_POST['email']) ? check_data($_POST['email']) : $_SESSION['error']['email'] = 'Email khong hop le';
@@ -63,45 +48,18 @@
                         $number_time_now = strtotime($now);
                         $last_id = $conn->lastInsertId();
                         $code = bin2hex($last_id . '_' . $number_time_now);
-                        $mail = new PHPMailer(true);
+                        $body = '<p>Vui lòng click vào <a href="http://ql-booking.com/controllers/auth/email_verification_user.php?email='.$data['email'].'&token='.$code.'">đây</a> để xác thực, email này chỉ có giá trị đến 24 tiếng sau.</p>';
                         
-                        try {
-                            $mail->SMTPDebug = 1; 
-                            $mail->isSMTP(); 
-                            $mail->Host       = 'smtp.gmail.com';
-                            $mail->SMTPAuth   = true;
-                            $mail->Username   = 'kayleight1702@gmail.com';
-                            $mail->Password   = 'bwzneolalwwhkekl';
-                            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-                            $mail->Port       = 587;
+                        $send = new Sendmail();
+                        $send->sendtoemail($data['email'], $data['username'], $body);
 
-                            $mail->SMTPSecure = 'tls';
-
-                            $mail->setFrom('from@example.com', 'Mailer');
-                            $mail->addAddress($data['email'], $data['username']);
-                            
-                    
-                            $mail->isHTML(true);
-                            
-                            $mail->Subject = 'Email verification';
-                            $mail->Body    = '<p>Vui lòng click vào <a href="http://ql-booking.com/controllers/auth/email_verification_user.php?email='.$data['email'].'&token='.$code.'">đây</a> để xác thực, email này chỉ có giá trị đến 24 tiếng sau.</p>';
-                        
-                            $mail->send();
-                            
-                            if($mail){
-                                $_SESSION['success'] = '<script>alert("Đăng ký thành công, vui lòng kiểm tra email để xác thực")</script>';
+                        $_SESSION['success'] = '<script>alert("Đăng ký thành công, vui lòng kiểm tra email để xác thực")</script>';
                                 
-                                return header('Location: ../../views/auth/login.php');
-                            }
-
-                        } catch (Exception $e) {
-                            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-                        }
+                        return header('Location: ../../views/auth/login.php');
                     }else{
                         $_SESSION['error']['error'] = 'Dang ky that bai';
                         return header('Location: ../../views/auth/register.php');
                     }
-                        
                 }else{
                     $_SESSION['error']['email'] = 'Email da ton tai';
                     $_SESSION['data'] = $data;

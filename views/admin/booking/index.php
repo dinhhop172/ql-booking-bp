@@ -33,7 +33,7 @@ if(isset($_SESSION['admin']) || isset($_SESSION['staff'])){
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">All booking<a href="create.php" class="float-right btn btn-primary">Add new user</a></h4>
+                            <h4 class="card-title">All booking<a href="create.php" class="float-right btn btn-primary">Add new booking</a></h4>
                             
                             <!-- <p class="card-title-desc">For basic styling—light padding and only horizontal dividers—add the base class <code>.table</code> to any -->
                             </p>

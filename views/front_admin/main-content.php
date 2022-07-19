@@ -56,7 +56,7 @@
                                     </div>
                                     <div class="text-white">
                                         <h6 class="text-uppercase mb-3 font-size-16">Doanh thu</h6>
-                                        <h2 class="mb-4">$<?= tong_doanh_thu()['tongdoanhthu'] ?></h2>
+                                        <h2 class="mb-4">$<?= tong_doanh_thu()['total_price'] ?></h2>
                                         <span class="badge badge-danger"> -29% </span> <span class="ml-2">From previous period</span>
                                     </div>
                                 </div>
@@ -69,8 +69,8 @@
                                         <i class="mdi mdi-tag-text-outline float-right"></i>
                                     </div>
                                     <div class="text-white">
-                                        <h6 class="text-uppercase mb-3 font-size-16">Average Price</h6>
-                                        <h2 class="mb-4">$15.9</h2>
+                                        <h6 class="text-uppercase mb-3 font-size-16">Room available</h6>
+                                        <h2 class="mb-4"><?= room_available()[0]['sumroomavailable'] ?></h2>
                                         <span class="badge badge-warning"> 0% </span> <span class="ml-2">From previous period</span>
                                     </div>
                                 </div>
@@ -83,8 +83,8 @@
                                         <i class="mdi mdi-briefcase-check float-right"></i>
                                     </div>
                                     <div class="text-white">
-                                        <h6 class="text-uppercase mb-3 font-size-16">Product Sold</h6>
-                                        <h2 class="mb-4">1890</h2>
+                                        <h6 class="text-uppercase mb-3 font-size-16">Room Booked</h6>
+                                        <h2 class="mb-4"><?= (room_booked()[0]['sumroombooked']); ?></h2>
                                         <span class="badge badge-info"> +89% </span> <span class="ml-2">From previous period</span>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@
                                         </div>
                                     </div>
 
-                                    <div id="morris-donut-example" class="morris-charts morris-charts-height" dir="ltr"></div>
+                                    <div id="morris-donut" class="morris-charts morris-charts-height" dir="ltr"></div>
                                 </div>
                             </div>
                         </div>

@@ -46,7 +46,7 @@ include_once 'models/rooms/function.php';
                 </ul>
                 <?php if(isset($_SESSION['user'])){?>
                     <a class="text-light">Hello <?= $_SESSION['user']['username'] ?></a>&emsp;
-                    <a class="text-light">Order</a>&emsp;
+                    <a href="views/user/order/index.php" class="text-light">Order</a>&emsp;
                     <a class="text-info" href="views/auth/logout.php">Logout</a>
                    
                     <?php }else{ ?>

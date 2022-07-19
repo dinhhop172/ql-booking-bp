@@ -97,5 +97,4 @@ function change_status_room_when_booking($id, $conn){
     $pre->execute();
     return $pre;
 }
-
 ?>

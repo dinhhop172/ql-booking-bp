@@ -70,10 +70,10 @@ function check_verify_email($data, $conn){
     return $result;
 }
 function verify_email_user($data, $conn){
-    $sql = "UPDATE account SET email_verified_at = NOW(), status = 1 WHERE email = :email AND verification_code = :verification_code";
+    $sql = "UPDATE account SET email_verified_at = NOW(), status = 1 WHERE email = :email";
     $pre = $conn->prepare($sql);
     $pre->bindParam(':email', $data['email'], PDO::PARAM_STR);
-    $pre->bindParam(':verification_code', $data['verification_code'], PDO::PARAM_STR);
+    // $pre->bindParam(':verification_code', $data['verification_code'], PDO::PARAM_STR);
     return $pre->execute();
 }
 function update_user($data, $conn){

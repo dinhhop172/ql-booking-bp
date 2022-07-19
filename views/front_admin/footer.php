@@ -27,4 +27,21 @@
 
             <!-- App js -->
             <script src="../../../assets/js/app.js"></script>
+            <script>
+                var users = <?= count_user() ?>;
+                var doanhthu = <?= tong_doanh_thu()['total_price'] ?>;
+                var roomavaiable = <?= room_available()[0]['sumroomavailable'] ?>;
+                var roombooked = <?= room_booked()[0]['sumroombooked'] ?>;
+
+                new Morris.Donut({
+                element: 'morris-donut',
+                
+                data: [
+                    { label:"Users",value:users },
+                    { label:"Doanh thu",value:doanhthu },
+                    { label:"Room available",value:roomavaiable },
+                    { label:"Room booked",value:roombooked },
+                ]
+                });
+            </script>
 </body>

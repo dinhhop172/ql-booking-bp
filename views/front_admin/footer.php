@@ -34,7 +34,7 @@
                 var roombooked = <?= room_booked()[0]['sumroombooked'] ?>;
 
                 new Morris.Donut({
-                element: 'morris-donut',
+                element: 'morris-donut-example',
                 
                 data: [
                     { label:"Users",value:users },

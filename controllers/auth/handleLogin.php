@@ -1,12 +1,7 @@
-<?php 
-    session_start();
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\SMTP;
-    use PHPMailer\PHPMailer\Exception;
-
-    require '../../vendor/autoload.php';
+<?php session_start();
     include_once '../../connect.php';
     include_once '../../models/auth/function.php';
+    include_once 'sendmail.php';
 
     if(isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['password'])){
         $email = isset($_POST['email']) ? check_data($_POST['email']) : '';
@@ -34,37 +29,12 @@
                     $_COOKIE[$verification_code] = substr(number_format(time() * rand(),0,'',''),0,6);
                     $data['verification_code'] = $_COOKIE[$verification_code];
                     $data['email'] = $email;
-                    $mail = new PHPMailer(true);
-                       
-                    try {
-                        $mail->SMTPDebug = 0;
-                        $mail->isSMTP();                                           
-                        $mail->Host       = 'smtp.gmail.com';                   
-                        $mail->SMTPAuth   = true;                                   
-                        $mail->Username   = 'kayleight1702@gmail.com';                     
-                        $mail->Password   = 'bwzneolalwwhkekl';                             
-                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;          
-                        $mail->Port       = 587;                            
-                        $mail->SMTPSecure = 'tls';
-                        //Recipients
-                        $mail->setFrom('from@example.com', 'Mailer');
-                        $mail->addAddress($email, $loggerUser['username']);//Add a recipient
-                        
-                
-                        //Content
-                        $mail->isHTML(true);
-                        
-                        $mail->Subject = 'Email verification';
-                        $mail->Body    = '<p>Your verification code is: <b style="font-size: 30px">'.$data['verification_code'].'</b></p>';
-                    
-                        $mail->send();
-                        if($mail){
-                            set_verify_code_admin($data, $conn);
-                            // die("Please verify your email <a href='email_verification_admin.php?email=".$data['email']."'>from here.</a>");
-                            return header("Location: email_verification_admin.php?email=".$data['email']);
-                        }
-                    } catch (Exception $e) {
-                        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                    $body = '<p>Your verification code is: <b style="font-size: 30px">'.$data['verification_code'].'</b></p>';
+
+                    if(set_verify_code_admin($data, $conn)){
+                        $send = new SendMail();
+                        $send->sendtoemail($email, $loggerUser['username'], $body);
+                        return header("Location: email_verification_admin.php?email=".$data['email']);
                     }
                 }
             }else{

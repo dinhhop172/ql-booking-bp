@@ -111,7 +111,7 @@
                                         </div>
                                     </div>
 
-                                    <div id="morris-donut" class="morris-charts morris-charts-height" dir="ltr"></div>
+                                    <div id="morris-donut-example" class="morris-charts morris-charts-height" dir="ltr"></div>
                                 </div>
                             </div>
                         </div>
